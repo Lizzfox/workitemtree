@@ -5,14 +5,19 @@ import (
 )
 
 type Node struct {
-	ID int
-	URL string
+	ID       int
+	URL      string
+	Title    string
 	Children []*Node
 }
 
-
-func showNode(node *Node, prefix string){
+func (node *Node) show(prefix string) {
 	if prefix == "" {
-		fmt.Printf("")
+		fmt.Printf("|-%v%v\n", node.ID, node.URL)
+	} else {
+		fmt.Printf("%v |-%v%v\n", prefix, node.ID, node.URL)
+	}
+	for _, n := range node.Children {
+		n.show(prefix+"  ")
 	}
 }

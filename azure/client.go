@@ -85,19 +85,20 @@ func GetWorkItems(orgName, PAT string) {
 		log.Fatal(err)
 	}
 
-	if resp != nil {
-
-		tree := tree.NewWorkItemTree(*(*resp).WorkItemRelations)
-
-		workItems, err := coreClient.GetWorkItems(ctx, workitemtracking.GetWorkItemsArgs{Ids: &tree.ItemIDs})
-		
-		if err != nil {
-			log.Fatal(err)
-		}
-
-		log.Print(workItems)
-
-	} else {
+	if resp == nil {
 		log.Print("Backlog is empty!")
+		return
 	}
+
+	tree := tree.NewWorkItemTree(*(*resp).WorkItemRelations)
+
+	workItems, err := coreClient.GetWorkItems(ctx, workitemtracking.GetWorkItemsArgs{Ids: &tree.ItemIDs})
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	log.Print(workItems)
+
+	tree.Show()
 }

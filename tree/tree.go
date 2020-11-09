@@ -13,7 +13,6 @@ type Tree struct {
 }
 
 func NewWorkItemTree(items []workitemtracking.WorkItemLink) *Tree {
-
 	tree := &Tree{
 		NodeTable: make(map[int]*Node), 
 		Roots: []*Node{},
@@ -21,29 +20,29 @@ func NewWorkItemTree(items []workitemtracking.WorkItemLink) *Tree {
 	}
 
 	for _, workItem := range items {
-
-		var parentId int
+		var parentID int
 
 		if workItem.Source != nil {
-			parentId = *workItem.Source.Id
+			parentID = *workItem.Source.Id
 		} else {
-			parentId = -1
+			parentID = -1
 		}
 
-		tree.add(*workItem.Target.Url, *workItem.Target.Id, parentId)
+		tree.ItemIDs = append(tree.ItemIDs, *workItem.Target.Id)
+		tree.add(*workItem.Target.Url, *workItem.Target.Id, parentID)
 	}
 
 	return tree
 }
 
 func (tree *Tree) add(URL string, id, parentID int) {
-	tree.ItemIDs = append(tree.ItemIDs, id)
 	node := &Node{ID: id, URL: URL, Children: []*Node{}}
 
 	if parentID == -1 {
 		tree.Roots = append(tree.Roots, node)
 	} else {
 		parent, ok := tree.NodeTable[parentID]
+
 		if !ok {
 			fmt.Printf("add: parentId=%v: not found\n", parentID)
 			return
@@ -53,4 +52,12 @@ func (tree *Tree) add(URL string, id, parentID int) {
 	}
 
 	tree.NodeTable[id] = node
+}
+
+func (tree *Tree) Show() {
+	fmt.Printf("WORK ITEM TREE:\n")
+	
+	for _, branch := range tree.Roots {
+		branch.show("")
+	}
 }
