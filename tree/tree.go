@@ -61,3 +61,11 @@ func (tree *Tree) Show() {
 		branch.show("")
 	}
 }
+
+func (tree *Tree) MergeTitles(workItems []workitemtracking.WorkItem){
+	for _, item := range workItems {
+		title := fmt.Sprintf("%v", (*item.Fields)["System.Title"])
+		
+		tree.NodeTable[*item.Id].Title = title
+	}
+}

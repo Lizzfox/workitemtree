@@ -13,10 +13,11 @@ type Node struct {
 
 func (node *Node) show(prefix string) {
 	if prefix == "" {
-		fmt.Printf("|-%v%v\n", node.ID, node.URL)
+		fmt.Printf("|-%v %v\n", node.ID, node.Title)
 	} else {
-		fmt.Printf("%v |-%v%v\n", prefix, node.ID, node.URL)
+		fmt.Printf("%v |-%v %v\n", prefix, node.ID, node.Title)
 	}
+
 	for _, n := range node.Children {
 		n.show(prefix+"  ")
 	}
