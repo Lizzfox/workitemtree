@@ -20,8 +20,8 @@ func (node *Node) show(prefix string) {
 	}
 
 	fmt.Print(resStr)
-	
+
 	for _, n := range node.Children {
-		n.show(prefix+"  ")
+		n.show(prefix + "  ")
 	}
 }
