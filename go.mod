@@ -1,4 +1,4 @@
-module github.com/Lizzfox/workingitemtree
+module github.com/Lizzfox/workitemtree
 
 go 1.15
 

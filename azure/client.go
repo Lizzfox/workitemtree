@@ -8,12 +8,14 @@ import (
 	"github.com/microsoft/azure-devops-go-api/azuredevops"
 	"github.com/microsoft/azure-devops-go-api/azuredevops/workitemtracking"
 
-	"github.com/Lizzfox/workingitemtree/tree"
+	"github.com/Lizzfox/workitemtree/tree"
 )
 
+// AzureURL is the Azure DevOps URL
 const AzureURL = "https://dev.azure.com/"
 
-func GetWorkItems(orgName, PAT string) {
+// PrintWorkItems prints work items for organization  
+func PrintWorkItems(orgName, PAT string) {
 	orgURL := fmt.Sprintf("%s%s", AzureURL, orgName)
 	connection := azuredevops.NewPatConnection(orgURL, PAT)
 	ctx := context.Background()
@@ -24,7 +26,7 @@ func GetWorkItems(orgName, PAT string) {
 	}
 
 	queryText := `
-								select [System.Id], [System.WorkItemType], [System.Title]
+								select [System.Id], [System.Title]
 								from WorkItemLinks
 								where ([System.Links.LinkType] = 'System.LinkTypes.Hierarchy-Forward')
 								order by [System.Id]
@@ -61,6 +63,5 @@ func GetWorkItems(orgName, PAT string) {
 	}
 
 	tree.MergeTitles(*workItems)
-
 	tree.Show()
 }
