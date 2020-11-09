@@ -3,7 +3,8 @@ The workitemtree represents a little util for printing work items from Azure Dev
 
 ## How to run?
 
-Download latest release then run the following command in cmd:
+Download the ```workingitemtree.exe``` from the latest release.
+Run the following command in cmd:
 
 ```bash
 workitemtree [YOUR_ORGANIZATION_NAME] [YOUR_PERSONAL_ACCESS_TOKEN]
